@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.0.1 (2025-01-11)
+
+### Fix
+
+* fix(python_class): add hello world function ([`8a17bb2`](https://github.com/dverelst/package/commit/8a17bb2f1eb6710a1aaa54938b03dbd0b27c438b))
+
 ## v0.0.0 (2025-01-11)
 
 ### Unknown
