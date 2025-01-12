@@ -3,7 +3,7 @@ import numpy as np
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import coint
 import matplotlib.pyplot as plt
-
+import pandas as pd
 
 def log_returns(ticker1, start_date, end_date):
 
@@ -42,11 +42,36 @@ def generate_trading_signals(spread, z_threshold=1.0):
 
     return buy_signal, sell_signal, z_score
 
+def generate_positions_dataframe(ticker1, ticker2, start_date, end_date, buy_signal, sell_signal, hedge_ratio):
+    
+    positions = pd.DataFrame(index=buy_signal.index)
+    positions[ticker1] = 0
+    positions[ticker2] = 0
+
+    # Iterate through the signals to update positions
+    for i in range(0, len(buy_signal)):
+        if buy_signal.iloc[i]:
+            # Go long Stock1 and short Stock2
+            positions.loc[buy_signal.index[i], ticker1] = 1
+            positions.loc[buy_signal.index[i], ticker2] = -hedge_ratio
+        elif sell_signal.iloc[i]:
+            # Go short Stock1 and long Stock2
+            positions.loc[sell_signal.index[i], ticker1] = -1
+            positions.loc[sell_signal.index[i], ticker2] = hedge_ratio
+
+    # Forward fill positions to maintain trades until new signals occur
+    positions = positions.ffill().fillna(0)
+
+    return positions
+
+
 returns1 = log_returns("AAPL", "2010-01-01", "2025-01-10")
 returns2 = log_returns("AMD", "2010-01-01", "2025-01-10")
-
 #print(test_cointegration(returns1, returns2, 0.05))
-#print(type(OLS_spread(returns1, returns2)[0]))
-print(generate_trading_signals(OLS_spread(returns1, returns2)[0]))
-
-print(returns1)
+spread = OLS_spread(returns1, returns2)[0]
+beta = OLS_spread(returns1, returns2)[1][0]
+buy_signal = generate_trading_signals(spread)[0]
+sell_signal = generate_trading_signals(spread)[1]
+print(buy_signal)
+print(sell_signal)
+print(generate_positions_dataframe("AAPL", "NVDA", "2010-01-01", "2025-01-10", buy_signal, sell_signal, beta))
