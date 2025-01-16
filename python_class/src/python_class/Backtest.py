@@ -36,21 +36,21 @@ class Backtest:
 
         # self.initial_date to yyyy-mm-dd format
         init_ = self.initial_date.strftime('%Y-%m-%d')
-        
+        print(init_)
         # self.final_date to yyyy-mm-dd format
         final_ = self.final_date.strftime('%Y-%m-%d')
         
-        returns1 = Cointegration.log_returns(f"{self.weight.columns[0]}", "2010-01-01", "2025-01-10")
+        returns1 = Cointegration.log_returns(f"{self.weight.columns[0]}","2010-01-01", "2025-01-10")
         returns2 = Cointegration.log_returns(f"{self.weight.columns[1]}", "2010-01-01", "2025-01-10")
 
         returns = pd.DataFrame({f"{self.weight.columns[0]}": returns1, f"{self.weight.columns[1]}": returns2})
+        returns_strat = pd.DataFrame(columns = ["Portfolio returns", "Portfolio Value"], index = self.weight.index)
+        returns_strat.loc[0, "Portfolio Value"] = self.initial_cash
 
-        for i in enumerate(self.weight.index):
-            returns_strat = self.weight.loc[i].T @ returns.loc[i]
-            print(returns_strat)
-        print(returns)
-        print(self.weight)
+        for i in self.weight.index:
+            returns_strat.loc[i] = self.weight.loc[i].T @ returns.loc[i]
 
+        print(returns_strat.iloc[0])
         daily_pnl = pd.Series(index=self.weight.index, dtype=float)
 
 

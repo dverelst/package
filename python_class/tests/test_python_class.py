@@ -6,7 +6,7 @@ returns1 = Cointegration.log_returns("AAPL", "2010-01-01", "2025-01-10")
 returns2 = Cointegration.log_returns("AMD", "2010-01-01", "2025-01-10")
 
 spread = Cointegration.OLS_spread(returns1, returns2)[0]
-beta = Cointegration.OLS_spread(returns1, returns2)[1][0]
+beta = Cointegration.OLS_spread(returns1, returns2)[1].iloc[0]
 
 buy_signal = Cointegration.generate_trading_signals(spread)[0]
 sell_signal = Cointegration.generate_trading_signals(spread)[1]

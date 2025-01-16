@@ -46,7 +46,7 @@ def generate_trading_signals(spread, z_threshold=1.0):
 
 def generate_positions_dataframe(ticker1, ticker2, start_date, end_date, buy_signal, sell_signal, hedge_ratio):
     
-    positions = pd.DataFrame(index=buy_signal.index)
+    positions = pd.DataFrame(index=buy_signal.index, columns=[ticker1, ticker2], dtype=float)
     positions[ticker1] = 0
     positions[ticker2] = 0
 
@@ -55,11 +55,11 @@ def generate_positions_dataframe(ticker1, ticker2, start_date, end_date, buy_sig
         if buy_signal.iloc[i]:
             # Go long Stock1 and short Stock2
             positions.loc[buy_signal.index[i], ticker1] = 1
-            positions.loc[buy_signal.index[i], ticker2] = -hedge_ratio
+            positions.loc[buy_signal.index[i], ticker2] = float(-hedge_ratio)
         elif sell_signal.iloc[i]:
             # Go short Stock1 and long Stock2
             positions.loc[sell_signal.index[i], ticker1] = -1
-            positions.loc[sell_signal.index[i], ticker2] = hedge_ratio
+            positions.loc[sell_signal.index[i], ticker2] = float(hedge_ratio)
 
     # Forward fill positions to maintain trades until new signals occur
     positions = positions.ffill().fillna(0)
