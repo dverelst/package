@@ -11,7 +11,7 @@ beta = Cointegration.OLS_spread(returns1, returns2)[1].iloc[0]
 buy_signal = Cointegration.generate_trading_signals(spread)[0]
 sell_signal = Cointegration.generate_trading_signals(spread)[1]
 
-strat = Cointegration.generate_positions_dataframe("AAPL", "NVDA", "2010-01-01", "2025-01-10", buy_signal, sell_signal, beta)
+strat = Cointegration.generate_positions_dataframe("AMD", "NVDA", "2010-01-01", "2025-01-10", buy_signal, sell_signal, beta)
 
 backtest = Backtest()
 backtest.weight = strat

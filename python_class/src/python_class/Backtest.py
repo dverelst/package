@@ -45,13 +45,17 @@ class Backtest:
 
         returns = pd.DataFrame({f"{self.weight.columns[0]}": returns1, f"{self.weight.columns[1]}": returns2})
         returns_strat = pd.DataFrame(columns = ["Portfolio returns", "Portfolio Value"], index = self.weight.index)
-        returns_strat.loc[0, "Portfolio Value"] = self.initial_cash
 
-        for i in self.weight.index:
-            returns_strat.loc[i] = self.weight.loc[i].T @ returns.loc[i]
+        for i in range(len(self.weight.index)):
+            returns_strat.iloc[i, 0] = self.weight.iloc[i].T @ returns.iloc[i]
+            if i == 0:
+                returns_strat.iloc[i, 1] = self.initial_cash*(1+returns_strat.iloc[i, 0])
 
-        print(returns_strat.iloc[0])
-        daily_pnl = pd.Series(index=self.weight.index, dtype=float)
+            else:
+                returns_strat.iloc[i, 1] = returns_strat.iloc[i-1, 1]*(1+returns_strat.iloc[i, 0])
+
+        print(returns_strat)
+        print(returns_strat["Portfolio returns"].sum())
 
 
         return 
