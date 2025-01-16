@@ -40,8 +40,8 @@ class Backtest:
         # self.final_date to yyyy-mm-dd format
         final_ = self.final_date.strftime('%Y-%m-%d')
         
-        returns1 = Cointegration.log_returns(f"{self.weight.columns[0]}","2010-01-01", "2025-01-10")
-        returns2 = Cointegration.log_returns(f"{self.weight.columns[1]}", "2010-01-01", "2025-01-10")
+        returns1 = Cointegration.log_returns(f"{self.weight.columns[0]}",init_, final_)
+        returns2 = Cointegration.log_returns(f"{self.weight.columns[1]}", init_, final_)
 
         returns = pd.DataFrame({f"{self.weight.columns[0]}": returns1, f"{self.weight.columns[1]}": returns2})
         returns_strat = pd.DataFrame(columns = ["Portfolio returns", "Portfolio Value"], index = self.weight.index)
@@ -54,10 +54,6 @@ class Backtest:
             else:
                 returns_strat.iloc[i, 1] = returns_strat.iloc[i-1, 1]*(1+returns_strat.iloc[i, 0])
 
-        print(returns_strat)
-        print(returns_strat["Portfolio returns"].sum())
-
-
-        return 
+        return returns_strat["Portfolio Value"]
         # save to csv, use the backtest name 
         

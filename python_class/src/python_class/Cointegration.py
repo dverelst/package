@@ -9,6 +9,8 @@ from datetime import datetime
 
 def log_returns(ticker1, start_date, end_date):
 
+    #computing the log returns of a given stock
+
     stocks_data = data_module.get_stock_data(ticker1, start_date, end_date)
     stocks_data= stocks_data.set_index("Date")
     stock1_close = stocks_data["Close"]
@@ -19,7 +21,7 @@ def log_returns(ticker1, start_date, end_date):
     return log_returns
 
 def test_cointegration(returns1, returns2, alpha):
-    """Test for cointegration between two time series."""
+    #Testing Cointegration hypothesis between two returns series
 
     score, p_value, _ = coint(returns1, returns2)
     print(f"Cointegration Test: p-value = {p_value}")
@@ -27,7 +29,7 @@ def test_cointegration(returns1, returns2, alpha):
     return p_value < alpha # Consider cointegrated if p-value < 0.05
 
 def OLS_spread(returns1, returns2):
-    """Calculate the spread between two cointegrated stocks."""
+    #Computing the linear regression of the two stocks to use the beta as a hedge ratio
 
     X = sm.add_constant(returns2)
     model = sm.OLS(returns1, X).fit()
@@ -35,8 +37,8 @@ def OLS_spread(returns1, returns2):
 
     return spread, model.params
 
-def generate_trading_signals(spread, z_threshold=1.0):
-    """Generate trading signals based on z-score of the spread."""
+def trading_signals(spread, z_threshold=1.0):
+    #Generating trading signals using the z-score of the spread
 
     z_score = (spread - spread.mean())/ spread.std()
     buy_signal = z_score < -z_threshold  # Buy the spread
@@ -44,7 +46,7 @@ def generate_trading_signals(spread, z_threshold=1.0):
 
     return buy_signal, sell_signal, z_score
 
-def generate_positions_dataframe(ticker1, ticker2, start_date, end_date, buy_signal, sell_signal, hedge_ratio):
+def positions_dataframe(ticker1, ticker2, start_date, end_date, buy_signal, sell_signal, hedge_ratio):
     
     positions = pd.DataFrame(index=buy_signal.index, columns=[ticker1, ticker2], dtype=float)
     positions[ticker1] = 0
