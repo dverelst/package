@@ -52,13 +52,13 @@ class Backtest:
 
         daily_pnl = pd.Series(index=self.weight.index, dtype=float)
 
-        for i, date in enumerate(self.weight.index):
+        for i in range(len(self.weight.index)):
             if i == 0:
                 continue 
             
-            price = prices.loc[date]
-            allocation = self.weight.loc[date]
-            print(allocation)
+            price = prices.iloc[i]
+            allocation = self.weight.iloc[i]
+            portfolio_value.iloc[i] = price.iloc[i]*
             #print(df["ticker" == self.weight.columns[0]].loc[date])
 
         return 
