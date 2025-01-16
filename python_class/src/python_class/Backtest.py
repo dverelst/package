@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import logging 
 import numpy as np
 from python_class import Cointegration
+import matplotlib.pyplot as plt
 
 class Backtest:
     initial_date: datetime
@@ -44,6 +45,26 @@ class Backtest:
             else:
                 returns_strat.iloc[i, 1] = returns_strat.iloc[i-1, 1]*(1+returns_strat.iloc[i, 0])
 
+        fig, axes = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
+
+        axes[0].plot(returns_strat.index, returns_strat['Portfolio returns'], label='Daily Returns', color='blue')
+        axes[0].set_title('Portfolio Returns')
+        axes[0].set_ylabel('Returns')
+        axes[0].axhline(0, color='gray', linestyle='--', linewidth=0.8)
+        axes[0].legend()
+
+        # Portfolio Value Plot
+        axes[1].plot(returns_strat.index, returns_strat['Portfolio Value'], label='Portfolio Value', color='green')
+        axes[1].set_title('Portfolio Value Over Time')
+        axes[1].set_ylabel('Portfolio Value')
+        axes[1].legend()
+
+        # Shared x-axis formatting
+        axes[1].set_xlabel('Date')
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+
+        # Show the plots
+        plt.show()
+
         return returns_strat["Portfolio Value"]
-        # save to csv, use the backtest name 
-        
