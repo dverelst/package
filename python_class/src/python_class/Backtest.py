@@ -43,17 +43,19 @@ class Backtest:
         ticker1 = ticker1.set_index("Date")["Close"]
         ticker2 = ticker2.set_index("Date")["Close"]
 
-        df = df.set_index("Date")
+        prices = pd.DataFrame({f"{self.weight.columns[0]}": ticker1, f"{self.weight.columns[1]}": ticker2})
+
         portfolio_value = pd.Series(index=self.weight.index, dtype=float)
-        daily_pnl = pd.Series(index=self.weight.index, dtype=float)
         current_capital = self.initial_cash
         portfolio_value.iloc[0] = current_capital 
+
+        daily_pnl = pd.Series(index=self.weight.index, dtype=float)
 
         for i, date in enumerate(self.weight.index):
             if i == 0:
                 continue 
             
-            print(self.weight.loc[date][self.weight.columns[0]])
+            print(prices.loc[date][self.weight.columns[0]])
             #print(df["ticker" == self.weight.columns[0]].loc[date])
 
         return 
