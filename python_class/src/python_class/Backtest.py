@@ -1,14 +1,10 @@
-
 import yfinance as yf
 import pandas as pd 
-from sec_cik_mapper import StockMapper
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 import logging 
-from scipy.optimize import minimize
 import numpy as np
 from python_class import Cointegration
-import os
 
 class Backtest:
     initial_date: datetime
