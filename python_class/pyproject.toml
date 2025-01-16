@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python_class"
-version = "0.0.0"
+version = "1.0.0"
 description = "A package for 203 python class"
 authors = ["David Verelst"]
 license = "MIT"
@@ -8,7 +8,11 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11.9"
-numpy = "^2.2.1"
+numpy = "^2.2"
+pandas = "^2.2.3"
+statsmodels = "^0.14.4"
+datetime = "^5.5"
+logging = "^0.4.9.6"
 
 
 [build-system]
