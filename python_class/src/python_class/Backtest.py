@@ -36,7 +36,6 @@ class Backtest:
 
         # self.initial_date to yyyy-mm-dd format
         init_ = self.initial_date.strftime('%Y-%m-%d')
-        print(init_)
         # self.final_date to yyyy-mm-dd format
         final_ = self.final_date.strftime('%Y-%m-%d')
         
