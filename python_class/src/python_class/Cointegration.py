@@ -1,9 +1,11 @@
 from pybacktestchain import data_module
+from pybacktestchain import broker
 import numpy as np
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import coint
 import matplotlib.pyplot as plt
 import pandas as pd
+from datetime import datetime
 
 def log_returns(ticker1, start_date, end_date):
 
