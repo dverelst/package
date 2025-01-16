@@ -64,14 +64,3 @@ def generate_positions_dataframe(ticker1, ticker2, start_date, end_date, buy_sig
 
     return positions
 
-
-returns1 = log_returns("AAPL", "2010-01-01", "2025-01-10")
-returns2 = log_returns("AMD", "2010-01-01", "2025-01-10")
-#print(test_cointegration(returns1, returns2, 0.05))
-spread = OLS_spread(returns1, returns2)[0]
-beta = OLS_spread(returns1, returns2)[1][0]
-buy_signal = generate_trading_signals(spread)[0]
-sell_signal = generate_trading_signals(spread)[1]
-print(buy_signal)
-print(sell_signal)
-print(generate_positions_dataframe("AAPL", "NVDA", "2010-01-01", "2025-01-10", buy_signal, sell_signal, beta))
