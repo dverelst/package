@@ -1,5 +1,4 @@
 from pybacktestchain import data_module
-from pybacktestchain import broker
 import numpy as np
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import coint

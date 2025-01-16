@@ -7,9 +7,6 @@ from datetime import datetime, timedelta
 import logging 
 from scipy.optimize import minimize
 import numpy as np
-from pybacktestchain import blockchain
-from pybacktestchain import broker
-from pybacktestchain import data_module
 from python_class import Cointegration
 import os
 
@@ -24,11 +21,9 @@ class Backtest:
     initial_cash: int = 1000000  # Initial cash in the portfolio
     name_blockchain: str = 'backtest'
     verbose: bool = True
-    broker = broker.Broker(cash=initial_cash, verbose=verbose)
     
     def __post_init__(self):
         self.backtest_name = f"{self.weight.columns}"
-        self.broker.initialize_blockchain(self.name_blockchain)
 
     def run_backtest(self):
         logging.info(f"Running backtest from {self.initial_date} to {self.final_date}.")
