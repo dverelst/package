@@ -18,5 +18,5 @@ backtest = Backtest()
 backtest.weight = strat
 backtest.final_date = dt.datetime(2025, 1, 10)
 backtest.initial_date = dt.datetime(2010, 1, 1)
-
+ 
 backtest.run_backtest()

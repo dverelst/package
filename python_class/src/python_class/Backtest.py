@@ -55,7 +55,9 @@ class Backtest:
             if i == 0:
                 continue 
             
-            print(prices.loc[date][self.weight.columns[0]])
+            price = prices.loc[date]
+            allocation = self.weight.loc[date]
+            print(allocation)
             #print(df["ticker" == self.weight.columns[0]].loc[date])
 
         return 
