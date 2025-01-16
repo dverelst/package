@@ -1,9 +1,11 @@
 from pybacktestchain import data_module
+from pybacktestchain import broker
 import numpy as np
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import coint
 import matplotlib.pyplot as plt
 import pandas as pd
+from datetime import datetime
 
 def log_returns(ticker1, start_date, end_date):
 
@@ -67,11 +69,11 @@ def generate_positions_dataframe(ticker1, ticker2, start_date, end_date, buy_sig
 
 returns1 = log_returns("AAPL", "2010-01-01", "2025-01-10")
 returns2 = log_returns("AMD", "2010-01-01", "2025-01-10")
-#print(test_cointegration(returns1, returns2, 0.05))
 spread = OLS_spread(returns1, returns2)[0]
 beta = OLS_spread(returns1, returns2)[1][0]
 buy_signal = generate_trading_signals(spread)[0]
 sell_signal = generate_trading_signals(spread)[1]
-print(buy_signal)
-print(sell_signal)
-print(generate_positions_dataframe("AAPL", "NVDA", "2010-01-01", "2025-01-10", buy_signal, sell_signal, beta))
+
+trade_quantities = generate_positions_dataframe("AAPL", "NVDA", "2010-01-01", "2025-01-10", buy_signal, sell_signal, beta)
+
+print(trade_quantities)
