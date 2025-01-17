@@ -23,4 +23,4 @@ backtest.weight = strat
 backtest.final_date = dt.datetime(2025, 1, 10)
 backtest.initial_date = dt.datetime(2020, 1, 1)
  
-print(backtest.run_backtest())
+backtest.run_backtest()

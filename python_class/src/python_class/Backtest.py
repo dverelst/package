@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 import logging 
 import numpy as np
+from sec_cik_mapper import StockMapper
 from python_class import Cointegration
 import matplotlib.pyplot as plt
 
