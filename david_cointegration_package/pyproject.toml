@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "david_cointegration_strat"
+name = "david_cointegration_package"
 version = "1.0.0"
 description = "A package for 203 python class"
 authors = ["David Verelst"]
